@@ -1,0 +1,16 @@
+{
+  "name": "javascriptfondamental",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --watch --config webpack.dev.js",
+    "prod": "webpack --config webpack.prod.js"
+  },
+  "author": "Zied Belguith",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0"
+  }
+}
