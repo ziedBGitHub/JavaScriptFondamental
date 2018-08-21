@@ -114,7 +114,7 @@ console.log("***** Types Conversions *****")
 console.log("// nomber to string conversion: ")
 
 let myNumber = 55.6;
-myStringResult = myNumber.toString();
+let myStringResult = myNumber.toString();
 console.log(myStringResult, typeof(myStringResult));
 
 console.log("// String to number conversions: ");
@@ -337,4 +337,99 @@ let fn5 = (prefix, suffix=".") => prefix + "some text here" + suffix;
 console.log(fn5("- ", " ?")); // - some text here ?
 console.log(fn5("* ")); // * some text here.
 
+//
+// CONSTRUCTOR FUNCTION
+//
 
+console.log("***** constructor function *****");
+
+function Car (id) {
+    this.carId = id;
+    this.start = function () {
+        console.log("starting car id : " + this.carId);
+    }
+}
+
+let carToStart = new Car(4545);
+carToStart.start(); // staring car id : 4545
+
+//
+// PROTOTYPE
+//
+Car.prototype.stop = function() {
+    console.log("stopping car id : " + this.carId);
+}
+carToStart.stop(); // stopping car id 4545
+
+String.prototype.sayHello = function() {
+    
+    return this.toString() + "Hello !";
+}
+console.log("Some text " .sayHello()); // Some text Hello !
+
+//
+// JSON
+//
+
+console.log("***** object to json *****");
+
+let objectCar = {
+    carId: 123,
+    carColor: "red",
+}
+console.log(JSON.stringify(objectCar)); // "{"carId":123,"carColor":"red"}"
+
+console.log('***** json to object *****');
+
+let someJson = `
+{
+    "carId": 123,
+    "carColor": "red",
+    "otherParam": "value"
+}`;
+
+console.log(JSON.parse(someJson)); // {carId: 123, carColor: "red", otherParam: "value"}
+
+//
+// ARRAY METHODS
+//
+
+let carList = [
+    { carId: 123, carColor: "red", type: "sedan" }, 
+    { carId: 456, carColor: "blue", type: "convertible" }, 
+    { carId: 789, carColor: "green", type: "sedan" }, 
+    { carId: 999, carColor: "black", type: "small" } 
+]
+
+console.log("***** parsing array and displaying each element id *****");
+
+carList.forEach(car => console.log(car.carId));
+
+console.log("***** filtring by type equal to sedan *****");
+
+let sedanArray = carList.filter(car => car.type === "sedan");
+console.log(sedanArray);
+
+console.log("***** testing if it exist some empty ids *****");
+
+let isNotEmpty = carList.every(car => car.carId > 0 );
+console.log(isNotEmpty);
+
+console.log("***** find first blue car *****");
+
+let blueCar = carList.find(car => car.carColor === "blue");
+console.log(blueCar);
+
+//
+// Class and modules
+//
+
+console.log("***** Class and modules *****");
+
+import { CarClass } from "../modules/Car.js"
+
+let carOne = new CarClass("blue", 5, "Renault");
+
+carOne.start();
+carOne.stop();
+carOne.describe();
