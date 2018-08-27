@@ -1,3 +1,5 @@
+import $ from "jquery"
+
 //
 // DIFFERENCE BETWEEN VAR AND LET
 //
@@ -433,3 +435,81 @@ let carOne = new CarClass("blue", 5, "Renault");
 carOne.start();
 carOne.stop();
 carOne.describe();
+
+//
+// ERROE HANDELING
+//
+
+try {
+    let name = UndefinedVar;
+    throw new Error("My Error"); // declaring new Error
+} catch (err) {
+    console.log("error: " + err); // Error: My Error
+} finally {
+    console.log("always log this !");
+}
+
+//
+// PROMISE
+//
+
+console.log("***** promise *****");
+let promise = new Promise(
+    function(resolve, reject) {
+        setTimeout(resolve, 100, "some value");
+    }
+);
+promise.then(
+    resolved => console.log("resolved " + resolved), 
+    rejected => console.log("rejected " + rejected)
+);
+
+let xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+    }
+}
+xhr.open("GET", "http://Z5b82c3402fd7f20014179164.mockapi.io/test/data", true);
+xhr.send();
+
+//
+// FORM
+//
+
+console.log("***** form *****");
+
+let form = document.getElementById("myForm");
+form.addEventListener("submit", event => {
+    event.preventDefault();
+    let name = form.elements["name"],
+        nameErr = document.getElementById("name-error"),
+        age = form.elements["age"],
+        ageErr = document.getElementById("age-error");
+    if (name.value == "") {
+        nameErr.textContent = "The name must be a String !"
+        nameErr.style.color = "red";
+        name.style.borderColor = "red";
+        name.focus();
+    }
+    if (!Number.parseInt(age.value)) {
+        ageErr.textContent = "The age must be a Number !"
+        ageErr.style.color = "red";
+        age.style.borderColor = "red";
+        age.focus();
+    }
+    if (name.value != "" && Number.parseInt(age.value)) { 
+        let json = {
+            name: name.value,
+            age: age.value
+        };
+        try {
+            let promise = $.post("http://5b82c3402fd7f20014179164.mockapi.io/test/data", JSON.stringify(json));
+            promise.then(
+            response => console.log(response),
+            error => console.log(error));
+        } catch(err) {
+            console.log(err);
+        } 
+    }
+});
